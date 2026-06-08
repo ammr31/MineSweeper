@@ -10,8 +10,18 @@
     <div class="app-container">
         <h1>Minesweeper</h1>
         <p>Click the squares to clear the board!</p>
-        
-        <div id="gameBoard"></div>
+
+        <div id="boardFrame">
+            <div id="gameBoard"></div>
+
+            <div id="overlay" aria-live="polite">
+                <div id="overlayContent">
+                    <div id="overlayTitle">Game Over</div>
+                    <div id="overlayMessage" style="margin-bottom: 12px;">Try again.</div>
+                    <button id="restartBtn" type="button">Restart</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="sw.js"></script>

@@ -2,12 +2,20 @@
 // 1. MINESWEEPER GAME LOGIC
 // ==========================================
 
-const numRows = 8;
-const numCols = 8;
-const numMines = 10;
+const numRows = 16;
+const numCols = 16;
+const numMines = 40;
 
 const gameBoard = document.getElementById("gameBoard");
+const overlayEl = document.getElementById("overlay");
+const overlayTitleEl = document.getElementById("overlayTitle");
+const overlayMessageEl = document.getElementById("overlayMessage");
+const restartBtn = document.getElementById("restartBtn");
+
 let board = [];
+let gameStatus = "playing"; // playing | won | lost
+let revealedCount = 0;
+const totalSafeCells = numRows * numCols - numMines;
 
 function initializeBoard() {
     // 1. Create empty board array structures
@@ -59,7 +67,31 @@ function initializeBoard() {
     }
 }
 
+function showOverlay({ title, message }) {
+    if (!overlayEl) return;
+    if (overlayTitleEl) overlayTitleEl.textContent = title;
+    if (overlayMessageEl) overlayMessageEl.textContent = message;
+    overlayEl.classList.add("show");
+}
+
+function hideOverlay() {
+    if (!overlayEl) return;
+    overlayEl.classList.remove("show");
+}
+
+function revealAllMines() {
+    for (let i = 0; i < numRows; i++) {
+        for (let j = 0; j < numCols; j++) {
+            if (board[i][j].isMine) {
+                board[i][j].revealed = true;
+            }
+        }
+    }
+}
+
 function revealCell(row, col) {
+    if (gameStatus !== "playing") return;
+
     if (
         row < 0 ||
         row >= numRows ||
@@ -71,15 +103,45 @@ function revealCell(row, col) {
     }
 
     board[row][col].revealed = true;
+    revealedCount++;
 
     if (board[row][col].isMine) {
-        alert("Game over! you step on the mine.");
-    } else if (board[row][col].count == 0) {
+        gameStatus = "lost";
+        revealAllMines();
+        renderBoard();
+        showOverlay({ title: "You lost!", message: "Restart to play again." });
+        return;
+    }
+
+    if (board[row][col].count === 0) {
         for (let dx = -1; dx <= 1; dx++) {
             for (let dy = -1; dy <= 1; dy++) {
                 revealCell(row + dx, col + dy);
             }
         }
+    }
+
+    // Win condition: all safe cells revealed
+    if (revealedCount >= totalSafeCells) {
+        gameStatus = "won";
+        renderBoard();
+        showOverlay({ title: "You win!", message: "Nice work. Restart to play again." });
+        return;
+    }
+
+    renderBoard();
+}
+
+function restartGame() {
+    gameStatus = "playing";
+    revealedCount = 0;
+    hideOverlay();
+    initializeBoard();
+    // ensure board sizing vars are applied (fixed 16x16)
+    if (gameBoard) {
+        gameBoard.style.setProperty("--rows", String(numRows));
+        gameBoard.style.setProperty("--cols", String(numCols));
+        gameBoard.style.setProperty("--cell-size", "24px");
     }
     renderBoard();
 }
@@ -111,6 +173,18 @@ function renderBoard() {
 
 // Only run game setup if window/DOM context exists
 if (typeof window !== 'undefined' && gameBoard) {
+    // set fixed 16x16 board sizing + cell size
+    gameBoard.style.setProperty("--rows", String(numRows));
+    gameBoard.style.setProperty("--cols", String(numCols));
+    gameBoard.style.setProperty("--cell-size", "24px");
+
+    // Restart wiring
+    if (restartBtn) {
+        restartBtn.addEventListener("click", () => {
+            restartGame();
+        });
+    }
+
     initializeBoard();
     renderBoard();
 }
