@@ -1,0 +1,15 @@
+{
+    "name": "My tester IOS app",
+    "short_name": "MyCustomApp",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background-color": "#f0f2f5",
+    "theme_color": "#007aff",
+    "icons": [
+        {
+            "src": "https://cdn-icons-png.flaticon.com/512/833/833281.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
