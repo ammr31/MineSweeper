@@ -2,33 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, intial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>mycustomapptitle</title>
-    <!--linking the css file for styling-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minesweeper Tester</title>
     <link rel="stylesheet" href="style.css">
-    <!--Link the manifest file-->
-    <link rel="manifest" href="manifest.json">
-    <!--iphone specific bar styling-->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 <body>
     <div class="app-container">
-        <h1>My Custom App</h1>
-        <p>I coded this my self</p>
-        <button id="clickMe">Tap me</button>
+        <h1>Minesweeper</h1>
+        <p>Click the squares to clear the board!</p>
+        
+        <div id="gameBoard"></div>
     </div>
 
-    <script>
-        // Register the service worker so it can be installed on the IOS
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js');
-        }
-
-        // Simple button interaction
-        document.getElementById('clickme').addEventListener('click', () => {
-            alert('It works perfectly');
-        });
-    </script>
+    <script src="sw.js"></script>
 </body>
 </html>
