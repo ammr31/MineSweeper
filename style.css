@@ -1,4 +1,4 @@
-/* Retro Minesweeper Theme & Layout */
+/* Unbreakable 8x8 Grid Layout */
 body {
     font-family: Arial, sans-serif;
     text-align: center;
@@ -12,37 +12,42 @@ body {
 }
 
 #gameBoard {
-    display: inline-block;
+    display: grid;
+    /* This forces exactly 8 columns, 30px each */
+    grid-template-columns: repeat(8, 30px); 
+    /* This forces exactly 8 rows, 30px each */
+    grid-template-rows: repeat(8, 30px); 
+    
+    gap: 0; /* Keeps the cells locked flush against each other */
+    justify-content: center; /* Centers the grid perfectly horizontally */
     background-color: #bdbdbd;
     padding: 10px;
     border: 3px solid #7b7b7b;
     border-radius: 5px;
-    line-height: 0; /* Prevents layout bugs between rows */
+    width: max-content; /* Keeps the grey wrapper tight around the grid */
+    margin: 20px auto; 
 }
 
 .cell {
-    display: inline-block;
     width: 30px;
     height: 30px;
     background-color: #c6c6c6;
+    box-sizing: border-box; /* Includes borders inside the 30x30px box */
     border-left: 3px solid #fff;
     border-top: 3px solid #fff;
     border-right: 3px solid #7b7b7b;
     border-bottom: 3px solid #7b7b7b;
     font-weight: bold;
     font-size: 16px;
-    line-height: 30px;
+    line-height: 24px; /* Centers text vertically */
     text-align: center;
-    vertical-align: top;
     cursor: pointer;
     user-select: none;
 }
 
 .cell.revealed {
     background-color: #d9d9d9;
-    border: 1px solid #7b7b7b;
-    width: 32px;  /* Adjusts width to keep grid flawless when borders change */
-    height: 32px;
+    border: 1px solid #7b7b7b; /* Flattened look when clicked */
     cursor: default;
 }
 

@@ -1,4 +1,7 @@
-//the game logic
+// ==========================================
+// 1. MINESWEEPER GAME LOGIC
+// ==========================================
+
 const numRows = 8;
 const numCols = 8;
 const numMines = 10;
@@ -7,6 +10,7 @@ const gameBoard = document.getElementById("gameBoard");
 let board = [];
 
 function initializeBoard() {
+    // 1. Create empty board array structures
     for (let i = 0; i < numRows; i++) {
         board[i] = [];
         for (let j = 0; j < numCols; j++) {
@@ -17,40 +21,40 @@ function initializeBoard() {
             };
         }
     }
-}
 
-//places mine randomly
-let minePlaced = 0;
-while (minePlaced < numMines) {
-    const row = Math.floor(Math.random() * numRows);
-    const col = Math.floor(Math.random() * numCols);
-    if (!board[row][col].isMine) {
-        board[row][col].isMine = true;
-        minePlaced++;
+    // 2. Places mines randomly (Moved inside so board structure exists first!)
+    let minePlaced = 0;
+    while (minePlaced < numMines) {
+        const row = Math.floor(Math.random() * numRows);
+        const col = Math.floor(Math.random() * numCols);
+        if (!board[row][col].isMine) {
+            board[row][col].isMine = true;
+            minePlaced++;
+        }
     }
-}
 
-//calculate counts
-for (let i = 0; i < numRows; i++) {
-    for (let j = 0; j < numCols; j++) {
-        if (!board[i][j].isMine) {
-            let count = 0;
-            for (let dx = -1; dx <= 1; dx++) {
-                for(let dy = -1; dy <= 1; dy++) {
-                    const ni = i + dx;
-                    const nj = j + dy;
-                    if (
-                        ni >= 0 &&
-                        ni < numRows &&
-                        nj >= 0 &&
-                        nj < numCols &&
-                        board[ni][nj].isMine
-                    ) {
-                        count++
+    // 3. Calculate adjacent mine counts (Moved inside for safety)
+    for (let i = 0; i < numRows; i++) {
+        for (let j = 0; j < numCols; j++) {
+            if (!board[i][j].isMine) {
+                let count = 0;
+                for (let dx = -1; dx <= 1; dx++) {
+                    for (let dy = -1; dy <= 1; dy++) {
+                        const ni = i + dx;
+                        const nj = j + dy;
+                        if (
+                            ni >= 0 &&
+                            ni < numRows &&
+                            nj >= 0 &&
+                            nj < numCols &&
+                            board[ni][nj].isMine
+                        ) {
+                            count++;
+                        }
                     }
                 }
+                board[i][j].count = count;
             }
-            board[i][j].count = count;
         }
     }
 }
@@ -69,10 +73,8 @@ function revealCell(row, col) {
     board[row][col].revealed = true;
 
     if (board[row][col].isMine) {
-        // Handling game over
         alert("Game over! you step on the mine.");
-    }else if (board[row][col].count == 0) {
-        //if cell ha no mines nearby, reveal adjacent cells
+    } else if (board[row][col].count == 0) {
         for (let dx = -1; dx <= 1; dx++) {
             for (let dy = -1; dy <= 1; dy++) {
                 revealCell(row + dx, col + dy);
@@ -83,7 +85,6 @@ function revealCell(row, col) {
 }
 
 function renderBoard() {
-    // Check if gameBoard exists before rendering to avoid errors in SW context
     if (!gameBoard) return;
     
     gameBoard.innerHTML = "";
@@ -96,7 +97,7 @@ function renderBoard() {
                 cell.classList.add("revealed");
                 if (board[i][j].isMine) {
                     cell.classList.add("mine");
-                    cell.textContent = "💣"; // Fixed potential layout break from original text
+                    cell.textContent = "💣"; 
                 } else if (board[i][j].count > 0) {
                     cell.textContent = board[i][j].count;
                 }
@@ -104,7 +105,7 @@ function renderBoard() {
             cell.addEventListener("click", () => revealCell(i, j));
             gameBoard.appendChild(cell);
         }
-        gameBoard.appendChild(document.createElement("br"));
+        // Removed the <br> creation line so it works perfectly with the CSS Grid!
     }
 }
 
@@ -118,13 +119,12 @@ if (typeof window !== 'undefined' && gameBoard) {
 // 2. SERVICE WORKER LOGIC
 // ==========================================
 
-// Basic service worker required for iOS PWA installation
 if (typeof self !== 'undefined' && 'ServiceWorkerGlobalScope' in self) {
     self.addEventListener('install', (e) => {
         self.skipWaiting();
     });
 
     self.addEventListener('fetch', (e) => {
-        // Leave blank for now; allows live updates from the web
+        // Leave blank for now
     });
 }
