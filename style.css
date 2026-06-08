@@ -15,8 +15,8 @@ body {
     display: grid;
 
     /* Filled in from JS via inline styles for fixed 16x16 + sizing */
-    grid-template-columns: repeat(var(--cols, 16), var(--cell-size, 24px));
-    grid-template-rows: repeat(var(--rows, 16), var(--cell-size, 24px));
+    grid-template-columns: repeat(var(--cols, 14), var(--cell-size, 24px));
+    grid-template-rows: repeat(var(--rows, 14), var(--cell-size, 24px));
 
     gap: 0; /* Keeps the cells locked flush against each other */
     justify-content: center; /* Centers the grid perfectly horizontally */

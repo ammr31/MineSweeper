@@ -2,8 +2,8 @@
 // 1. MINESWEEPER GAME LOGIC
 // ==========================================
 
-const numRows = 16;
-const numCols = 16;
+const numRows = 14;
+const numCols = 14;
 const numMines = 40;
 
 const gameBoard = document.getElementById("gameBoard");
