@@ -15,8 +15,8 @@ body {
     display: grid;
 
     /* Filled in from JS via inline styles for fixed 16x16 + sizing */
-    grid-template-columns: repeat(var(--cols, 14), var(--cell-size, 24px));
-    grid-template-rows: repeat(var(--rows, 14), var(--cell-size, 24px));
+    grid-template-columns: repeat(var(--cols, 14), var(--cell-size, 30px));
+    grid-template-rows: repeat(var(--rows, 14), var(--cell-size, 30px));
 
     gap: 0; /* Keeps the cells locked flush against each other */
     justify-content: center; /* Centers the grid perfectly horizontally */
@@ -78,18 +78,25 @@ body {
 
 
 .cell {
-    width: 30px;
-    height: 30px;
+    /* Remove width: 30px; and height: 30px; */
+    width: 100%;
+    height: 100%;
+    
     background-color: #c6c6c6;
-    box-sizing: border-box; /* Includes borders inside the 30x30px box */
+    box-sizing: border-box; 
+    border-right: 3px solid #7b7b7b;
     border-left: 3px solid #fff;
     border-top: 3px solid #fff;
-    border-right: 3px solid #7b7b7b;
     border-bottom: 3px solid #7b7b7b;
+
     font-weight: bold;
     font-size: 16px;
-    line-height: 24px; /* Centers text vertically */
-    text-align: center;
+    
+    /* Flexbox is safer for vertical text centering than line-height when sizes change */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
     cursor: pointer;
     user-select: none;
 }
