@@ -1,5 +1,6 @@
 /* Minesweeper styles */
 body {
+
     font-family: Arial, sans-serif;
     text-align: center;
     background-color: #f0f0f0;
@@ -72,10 +73,28 @@ body {
 }
 
 #overlay button:hover,
-#restartBtn:hover {
+#restartBtn:hover,
+#flagModeBtn:hover {
     background: #dedede;
 }
 
+.controls {
+    margin-top: 12px;
+}
+
+#flagModeBtn {
+    cursor: pointer;
+    padding: 10px 14px;
+    font-weight: 800;
+    border-radius: 8px;
+    border: 2px solid #7b7b7b;
+    background: #e9e9e9;
+}
+
+#flagModeBtn.on {
+    background: #ffe7a3;
+    border-color: #b88900;
+}
 
 .cell {
     /* Remove width: 30px; and height: 30px; */

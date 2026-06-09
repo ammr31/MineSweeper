@@ -14,7 +14,12 @@
         <div id="boardFrame">
             <div id="gameBoard"></div>
 
+            <div class="controls">
+                <button id="flagModeBtn" type="button" aria-pressed="false">🚩</button>
+            </div>
+
             <div id="overlay" aria-live="polite">
+
                 <div id="overlayContent">
                     <div id="overlayTitle">Game Over</div>
                     <div id="overlayMessage" style="margin-bottom: 12px;">Try again.</div>
@@ -24,6 +29,8 @@
         </div>
     </div>
 
+    <script src="game.js"></script>
     <script src="sw.js"></script>
+
 </body>
 </html>
